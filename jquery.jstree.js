@@ -2529,7 +2529,8 @@
 			drop_finish		: $.noop,
 			drag_target		: ".jstree-draggable",
 			drag_finish		: $.noop,
-			drag_check		: function (data) { return { after : false, before : false, inside : true }; }
+			drag_check		: function (data) { return { after : false, before : false, inside : true }; },
+			move_requested  : $.noop
 		},
 		_fn : {
 			dnd_prepare : function () {
@@ -2614,7 +2615,8 @@
 				}
 				else {
 					this.dnd_prepare();
-					this.move_node(o, r, last_pos, e[this._get_settings().dnd.copy_modifier + "Key"]);
+					this._get_settings().dnd.move_requested.call(this,
+						{ "o" : o, "r" : r, "last_pos" : last_pos, "e" : e[this._get_settings().dnd.copy_modifier + "Key"] });
 				}
 				o = false;
 				r = false;
